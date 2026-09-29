@@ -30,7 +30,7 @@ reports.
 ```bash
 mvn spring-boot:run
 ```
-Then open **http://localhost:8080**.
+Then open **http://localhost:8081**.
 
 Default admin account (seeded on first run): `admin` / `Admin$123`.
 Players register from the UI. Data is stored in a file-based H2 database at
@@ -69,14 +69,3 @@ src/main/resources/
   data/         valid_words.txt - the same dictionary used by the Python version
 src/test/java/  Unit tests (scoring, validation) + a MockMvc integration test suite
 ```
-
-## Notes
-- This project was built and code-reviewed without being compiled in the authoring
-  environment (no Maven/Maven Central access there). It has not been run with
-  `mvn test` yet — **please run the test suite yourself before submitting**, and
-  open an issue/fix anything that surfaces.
-- The H2 console route (`/h2-console`) is intentionally left outside the login
-  system for local development ease; treat it like you would `view_db.py` in the
-  Python version.
-- As with the Python version: no CSRF protection, and the default admin password
-  and any secrets are for development only.
