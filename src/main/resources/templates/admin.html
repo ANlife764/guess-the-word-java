@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Guess the Word - Admin</title>
+  <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+<header>
+  <a class="brand" href="/">Guess the Word</a>
+  <span th:text="${session.username} + ' (' + ${session.role} + ') \u00b7 '"></span>
+  <a th:href="@{/logout}">Log out</a>
+</header>
+<main>
+  <section class="card">
+    <h2>Daily report</h2>
+    <form method="get" th:action="@{/admin}">
+      <input type="date" name="date" th:value="${day}">
+      <input type="hidden" name="username" th:value="${username}">
+      <button type="submit">Show</button>
+    </form>
+    <p>Users who played on <span th:text="${day}"></span>: <b th:text="${dailyUsers}"></b><br>
+       Correct guesses: <b th:text="${dailyCorrect}"></b></p>
+  </section>
+
+  <section class="card">
+    <h2>User report</h2>
+    <form method="get" th:action="@{/admin}">
+      <input type="hidden" name="date" th:value="${day}">
+      <select name="username" onchange="this.form.submit()">
+        <option th:each="p : ${players}" th:value="${p}" th:text="${p}"
+                th:selected="${p == username}"></option>
+      </select>
+      <noscript><button type="submit">Show</button></noscript>
+    </form>
+    <table th:if="${!perUser.isEmpty()}">
+      <tr><th>Date</th><th>Words tried</th><th>Correct guesses</th></tr>
+      <tr th:each="r : ${perUser}">
+        <td th:text="${r.date}"></td>
+        <td th:text="${r.tried}"></td>
+        <td th:text="${r.correct}"></td>
+      </tr>
+    </table>
+    <p th:if="${perUser.isEmpty()}">No games for this player yet.</p>
+  </section>
+</main>
+</body>
+</html>

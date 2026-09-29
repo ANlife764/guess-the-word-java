@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Guess the Word</title>
+  <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+<header><a class="brand" href="/">Guess the Word</a></header>
+<main>
+  <p th:if="${okMessage}" th:text="${okMessage}" class="flash ok"></p>
+  <p th:if="${errorMessage}" th:text="${errorMessage}" class="flash error"></p>
+  <form method="post" th:action="@{/register}" class="card" id="regForm"
+        onsubmit="this.querySelector('button[type=submit]').disabled=true">
+    <h2>Register</h2>
+    <label>Username <input name="username" required pattern="[A-Za-z]{5,}" title="At least 5 letters"></label>
+    <small>At least 5 letters (upper or lower case).</small>
+    <label>Password
+      <div class="pw-wrap">
+        <input id="pw" name="password" type="password" required minlength="5">
+        <button type="button" class="pw-toggle" onclick="togglePw('pw', this)">Show</button>
+      </div>
+    </label>
+    <small>At least 5 characters with a letter, a digit and one of $ % *.</small>
+    <button type="submit">Register</button>
+    <p>Already registered? <a th:href="@{/login}">Log in</a></p>
+  </form>
+</main>
+<script>
+  function togglePw(id, btn) {
+    const input = document.getElementById(id);
+    const showing = input.type === "text";
+    input.type = showing ? "password" : "text";
+    btn.textContent = showing ? "Show" : "Hide";
+  }
+  // Post/Redirect/Get means a resubmit can't happen on refresh, but guard the
+  // button too in case the page is restored from the back/forward cache.
+  window.addEventListener("pageshow", () => {
+    const b = document.querySelector("#regForm button[type=submit]");
+    if (b) b.disabled = false;
+  });
+</script>
+</body>
+</html>

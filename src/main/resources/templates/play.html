@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Guess the Word</title>
+  <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+<header>
+  <a class="brand" href="/">Guess the Word</a>
+  <span th:if="${session.username}" th:text="${session.username} + ' (' + ${session.role} + ') \u00b7 '"></span>
+  <a th:if="${session.username}" th:href="@{/logout}">Log out</a>
+</header>
+<main>
+<section class="card center">
+  <p id="info"></p>
+  <p id="error" class="flash error" hidden></p>
+  <div id="grid" class="grid"></div>
+  <form id="guessForm" hidden>
+    <input id="guess" maxlength="5" autocomplete="off" placeholder="TYPE 5 LETTERS">
+    <button>Submit guess</button>
+  </form>
+  <button id="startBtn" hidden>Start new word</button>
+</section>
+<div id="modal" class="modal" hidden><div><p id="modalText"></p><button id="okBtn">OK</button></div></div>
+</main>
+<script th:src="@{/game.js}"></script>
+</body>
+</html>
