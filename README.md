@@ -30,7 +30,7 @@ reports.
 ```bash
 mvn spring-boot:run
 ```
-Then open **http://localhost:8081**.
+Then open **http://localhost:8081** in a browser.
 
 Default admin account (seeded on first run): `admin` / `Admin$123`.
 Players register from the UI. Data is stored in a file-based H2 database at
